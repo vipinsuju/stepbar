@@ -1,24 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState } from "react";
+import StepBar from "./Components/stepbar/StepBar";
+import PageOne from "./Components/pageone/pageOne";
+import PageTwo from "./Components/pagetwo/PageTwo";
+import PageThree from "./Components/pagethree/PageThree";
+import PageFour from "./Components/pagefour/PageFour";
 
 function App() {
+  const [page, setPage] = useState("pageOne");
+
+  const nextPage = (page: any) => {
+    setPage(page);
+  };
+
+  const nextPageNumber = (pageNumber: any) => {
+    switch (pageNumber) {
+      case "1":
+        setPage("pageOne");
+        break;
+      case "2":
+        setPage("pageTwo");
+        break;
+      case "3":
+        setPage("pageThree");
+        break;
+      case "4":
+        setPage("pageFour");
+        break;
+      default:
+        setPage("1");
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <StepBar page={page} onPageNumberClick={nextPageNumber} />
+      {
+        {
+          pageOne: <PageOne onButtonClick={nextPage} />,
+          pageTwo: <PageTwo onButtonClick={nextPage} />,
+          pageThree: <PageThree onButtonClick={nextPage} />,
+          pageFour: <PageFour />,
+        }[page]
+      }
     </div>
   );
 }
